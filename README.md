@@ -1,8 +1,12 @@
 # <img src='Workflow/icon.png' width='45' align='center' alt='icon'> ChatGPT / DALL-E Alfred Workflow
 
-OpenAI integrations
+What's new in this fork:
 
-[⤓ Install on the Alfred Gallery](https://alfred.app/workflows/alfredapp/openai)
+- Support OpenAI on Azure (set the `chatgpt_api_endpoint` environment variable to something like `https://example.openai.azure.com`)
+- <kbd>↩&#xFE0E;</kbd> Ask a new question. <kbd>⌘</kbd><kbd>↩&#xFE0E;</kbd> Continue chat.
+- New Universal Action: Translate to `{target language}`
+- New Universal Action: Improve writing
+- [⤓ Download](https://github.com/placeless/openai-workflow/releases)
 
 ## Setup
 
@@ -21,11 +25,11 @@ Query ChatGPT via the `chatgpt` keyword, the [Universal Action](https://www.alfr
 
 ![Querying ChatGPT](Workflow/images/about/chatgpttextview.png)
 
-* <kbd>↩&#xFE0E;</kbd> Ask a new question.
-* <kbd>⌘</kbd><kbd>↩&#xFE0E;</kbd> Clear and start new chat.
-* <kbd>⌥</kbd><kbd>↩&#xFE0E;</kbd> Copy last answer.
-* <kbd>⌃</kbd><kbd>↩&#xFE0E;</kbd> Copy full chat.
-* <kbd>⇧</kbd><kbd>↩&#xFE0E;</kbd> Stop generating answer.
+- <kbd>↩&#xFE0E;</kbd> Ask a new question.
+- <kbd>⌘</kbd><kbd>↩&#xFE0E;</kbd> Clear and start new chat.
+- <kbd>⌥</kbd><kbd>↩&#xFE0E;</kbd> Copy last answer.
+- <kbd>⌃</kbd><kbd>↩&#xFE0E;</kbd> Copy full chat.
+- <kbd>⇧</kbd><kbd>↩&#xFE0E;</kbd> Stop generating answer.
 
 #### Chat History
 
@@ -43,6 +47,6 @@ Query DALL·E via the `dalle` keyword.
 
 ![Querying DALL-E](Workflow/images/about/dalletextview.png)
 
-* <kbd>↩&#xFE0E;</kbd> Send a new prompt.
-* <kbd>⌘</kbd><kbd>↩&#xFE0E;</kbd> Archive images.
-* <kbd>⌥</kbd><kbd>↩&#xFE0E;</kbd> Reveal last image in the Finder.
+- <kbd>↩&#xFE0E;</kbd> Send a new prompt.
+- <kbd>⌘</kbd><kbd>↩&#xFE0E;</kbd> Archive images.
+- <kbd>⌥</kbd><kbd>↩&#xFE0E;</kbd> Reveal last image in the Finder.
