@@ -202,7 +202,7 @@ function run(argv) {
   const apiKey = envVar("openai_api_key")
   const apiOrgHeader = envVar("openai_org_id") ? ["--header", `OpenAI-Organization: ${envVar("openai_org_id")}`] : []
   const apiEndpoint = envVar("chatgpt_api_endpoint") || "https://api.openai.com"
-  const apiVersion = envVar("api_version") || "2014-06-01"
+  const apiVersion = envVar("api_version") || "2024-06-01"
   const useAzure = envVar("use_azure") || true
   const systemPrompt = envVar("system_prompt")
   const model = envVar("chatgpt_model_override") ? envVar("chatgpt_model_override") : envVar("gpt_model")

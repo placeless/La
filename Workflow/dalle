@@ -77,7 +77,7 @@ function run(argv) {
   const apiKey = envVar("openai_api_key")
   const apiOrgHeader = envVar("openai_org_id") ? ["--header", `OpenAI-Organization: ${envVar("openai_org_id")}`] : []
   const apiEndpoint = envVar("dalle_api_endpoint") || "https://api.openai.com"
-  const apiVersion = envVar("api_version") || "2014-06-01"
+  const apiVersion = envVar("api_version") || "2024-06-01"
   const useAzure = envVar("use_azure") || true
   const model = envVar("dalle_model")
   const imageNumber = parseInt(envVar("dalle_image_number"))
