@@ -1,0 +1,328 @@
+#!/usr/bin/osascript -l JavaScript
+
+// File system utilities
+const FileSystem = {
+  cache: new Map(),
+  CACHE_TTL: 1000,
+
+  exists(path) {
+    const now = Date.now();
+    const cached = this.cache.get(path);
+    
+    if (cached && now - cached.timestamp < this.CACHE_TTL) {
+      return cached.exists;
+    }
+    
+    try {
+      const exists = $.NSFileManager.defaultManager.fileExistsAtPath(path);
+      this.cache.set(path, { exists, timestamp: now });
+      return exists;
+    } catch (error) {
+      console.log('File check error:', error);
+      return false;
+    }
+  },
+
+  getModificationTime: path => 
+    $.NSFileManager.defaultManager.attributesOfItemAtPathError(path, undefined).js["NSFileModificationDate"].js.getTime(),
+    
+  remove: path => 
+    $.NSFileManager.defaultManager.removeItemAtPathError(path, undefined),
+    
+  writeText: (path, text) => 
+    $(text).writeToFileAtomicallyEncodingError(path, true, $.NSUTF8StringEncoding, undefined),
+    
+  readText: path => 
+    $.NSString.stringWithContentsOfFileEncodingError(path, $.NSUTF8StringEncoding, undefined).js,
+    
+  createEmptyFile: path => 
+    $.NSFileManager.defaultManager.createFileAtPathContentsAttributes(path, undefined, undefined)
+};
+
+// Chat message handling
+const Chat = {
+  history: [],
+
+  load(path) {
+    try {
+      this.history = JSON.parse(FileSystem.readText(path));
+      return this.history;
+    } catch (error) {
+      console.log('Chat load error:', error);
+      return [];
+    }
+  },
+
+  save(path, message, aiConfig = null) {
+    if (!this.isValidMessage(message)) return;
+
+    const enrichedMessage = this.enrichMessage(message, aiConfig);
+    this.history.push(enrichedMessage);
+    
+    try {
+      FileSystem.writeText(path, JSON.stringify(this.history));
+    } catch (error) {
+      console.log('Chat save error:', error);
+      this.history = [];
+    }
+  },
+
+  isValidMessage(message) {
+    return ['assistant', 'user'].includes(message.role) && 
+           message.content?.trim();
+  },
+
+  enrichMessage(message, aiConfig) {
+    if (message.role !== 'assistant' || !aiConfig) return message;
+    
+    return {
+      ...message,
+      intent: aiConfig.intent || 'chat',
+      provider: aiConfig.provider,
+      model: aiConfig.model
+    };
+  },
+
+  format(messages, isStreaming = false) {
+    return messages.reduce((formatted, msg, index, array) => {
+      if (msg.role === 'assistant') {
+        return `${formatted}${msg.content}\n\n`;
+      }
+      
+      if (msg.role === 'user') {
+        const quotedContent = msg.content.split('\n')
+          .map(line => `> ${line}`)
+          .join('\n');
+          
+        const isLastMessage = index === array.length - 1;
+        const nextIsUser = array[index + 1]?.role === 'user';
+        const showInterrupted = (isLastMessage || nextIsUser) && !isStreaming;
+        
+        return `${formatted}${quotedContent}\n\n${showInterrupted ? '[Answer Interrupted]\n\n' : ''}`;
+      }
+      
+      return formatted;
+    }, '');
+  }
+};
+
+// AI request handling
+const AI = {
+  createPayload(config, messages) {
+    const messagePayload = messages.map(msg => ({
+      role: msg.role,
+      content: msg.content
+    }));
+
+    const payload = {
+      model: config.model,
+      messages: config.spell ? 
+        [{ role: 'system', content: config.spell }, ...messagePayload] : 
+        messagePayload,
+      temperature: config.temperature,
+      top_p: config.top_p,
+      stream: true
+    };
+
+    return payload;
+  },
+
+  createCurlCommand(config, messages) {
+    const authHeader = config.provider === 'azure' ?
+      `api-key: ${config.api_key}` :
+      `Authorization: Bearer ${config.api_key}`;
+
+    return [
+      config.endpoint,
+      '--silent',
+      '--no-buffer',
+      '--header', 'Content-Type: application/json',
+      '--header', 'Accept: text/event-stream',
+      '--header', authHeader,
+      '--data', JSON.stringify(this.createPayload(config, messages))
+    ];
+  }
+};
+
+// Stream processing
+const Stream = {
+  lastData: '',
+
+  start(config, messages, streamFile, pidFile) {
+    FileSystem.createEmptyFile(streamFile);
+    
+    const task = $.NSTask.alloc.init;
+    task.executableURL = $.NSURL.fileURLWithPath('/usr/bin/curl');
+    task.arguments = [...AI.createCurlCommand(config, messages), '--output', streamFile];
+    task.standardOutput = $.NSPipe.pipe;
+    task.launchAndReturnError(false);
+    
+    FileSystem.writeText(pidFile, task.processIdentifier.toString());
+  },
+
+  process(streamFile, chatFile, pidFile, aiConfig) {
+    const streamData = FileSystem.readText(streamFile);
+    const chatHistory = Chat.load(chatFile);
+    
+    if (!this.hasNewData(streamData)) {
+      return this.createStreamingResponse(chatHistory);
+    }
+
+    // Check for error response first
+    if (this.isErrorResponse(streamData)) {
+      const errorResponse = this.handleError(streamData, chatHistory);
+      if (errorResponse) {
+        this.cleanup(streamFile, pidFile);
+        return errorResponse;
+      }
+    }
+
+    const { text, finished } = this.parseResponse(streamData);
+    const isStalled = this.isStreamStalled(streamFile);
+
+    if ((isStalled || finished) && text) {
+      return this.finalizeResponse(text, isStalled, finished, chatFile, streamFile, pidFile, aiConfig);
+    }
+
+    return this.createStreamingResponse(chatHistory, text);
+  },
+
+  hasNewData(streamData) {
+    if (!streamData || streamData === this.lastData) return false;
+    this.lastData = streamData;
+    return true;
+  },
+
+  isErrorResponse(data) {
+    return data.startsWith('{') || data.startsWith('[');
+  },
+
+  isStreamStalled(streamFile) {
+    return Date.now() - FileSystem.getModificationTime(streamFile) > 2000;
+  },
+
+  handleError(streamData, chatHistory) {
+    try {
+      const parsed = JSON.parse(streamData);
+      const error = parsed.error?.message || parsed[0]?.error?.message || parsed.code;
+      
+      if (error) {
+        return {
+          response: Chat.format(chatHistory),
+          behaviour: { response: 'replacelast' },
+          footer: `Error: ${error}`
+        };
+      }
+    } catch (error) {
+      return {
+        response: Chat.format(chatHistory),
+        behaviour: { response: 'replacelast' },
+        footer: `Error: ${streamData}`
+      };
+    }
+    return null;
+  },
+
+  parseResponse(data) {
+    let text = '';
+    let finished = null;
+
+    data.split('\n')
+      .filter(Boolean)
+      .map(line => line.replace(/^data: /, ''))
+      .forEach(line => {
+        try {
+          const parsed = JSON.parse(line);
+          text += parsed.choices?.[0]?.delta?.content || '';
+          finished = parsed.choices?.[0]?.finish_reason || finished;
+        } catch (error) {
+          // Ignore parse errors for incomplete chunks
+        }
+      });
+
+    return { text, finished };
+  },
+
+  createStreamingResponse(chatHistory, additionalText = '') {
+    return {
+      rerun: 0.1,
+      variables: { streaming_now: true },
+      response: Chat.format(chatHistory, true) + additionalText,
+      behaviour: { response: 'replacelast', scroll: 'end' }
+    };
+  },
+
+  finalizeResponse(text, isStalled, finishReason, chatFile, streamFile, pidFile, aiConfig) {
+    Chat.save(chatFile, { role: 'assistant', content: text }, aiConfig);
+    this.cleanup(streamFile, pidFile);
+    return {
+      response: Chat.format(Chat.load(chatFile)),
+      variables: { streaming_now: false },
+      footer: isStalled ? 
+        'You can ask LLM to continue the answer' : 
+        `[${aiConfig.provider}: ${aiConfig.model}]: ${finishReason}`,
+      behaviour: { scroll: 'end' }
+    };
+  },
+
+  cleanup(streamFile, pidFile) {
+    try {
+      if (FileSystem.exists(streamFile)) FileSystem.remove(streamFile);
+      if (FileSystem.exists(pidFile)) FileSystem.remove(pidFile);
+    } catch (error) {
+      console.log('Cleanup error:', error);
+    }
+  }
+};
+
+function getEnvironmentVariable(name) {
+  return ObjC.unwrap($.NSProcessInfo.processInfo.environment.objectForKey(name));
+}
+
+function run(argv) {
+  const userQuery = argv[0].trim();
+  const aiConfig = JSON.parse(getEnvironmentVariable('magic'));
+  const maxContextMessages = aiConfig.max_context || 4;
+  const chatFile = `${getEnvironmentVariable('alfred_workflow_data')}/chat.json`;
+  const streamFile = `${getEnvironmentVariable('alfred_workflow_data')}/stream`;
+  const pidFile = `${getEnvironmentVariable('alfred_workflow_data')}/pid`;
+  const streamingNow = getEnvironmentVariable('streaming_now') === '1';
+
+  if (!userQuery) {
+    return JSON.stringify({
+      response: Chat.format(Chat.load(chatFile)),
+      behaviour: { scroll: 'end' }
+    });
+  }
+
+  if (FileSystem.exists(streamFile)) {
+    if (!streamingNow) {
+      // Window was closed mid-stream, cleanup and start fresh with new user input
+      Stream.cleanup(streamFile, pidFile);
+      const chatHistory = Chat.load(chatFile);
+      Chat.save(chatFile, { role: 'user', content: userQuery });
+      const recentMessages = [...chatHistory.slice(-maxContextMessages), { role: 'user', content: userQuery }];
+      Stream.start(aiConfig, recentMessages, streamFile, pidFile);
+      return JSON.stringify({
+        rerun: 0.1,
+        variables: { streaming_now: true },
+        response: Chat.format(Chat.load(chatFile), true),
+        behaviour: { scroll: 'end' }
+      });
+    }
+    return JSON.stringify(Stream.process(streamFile, chatFile, pidFile, aiConfig));
+  }
+
+  const chatHistory = Chat.load(chatFile);
+  const recentMessages = chatHistory.slice(-maxContextMessages);
+  
+  Chat.save(chatFile, { role: 'user', content: userQuery });
+  Stream.start(aiConfig, [...recentMessages, { role: 'user', content: userQuery }], streamFile, pidFile);
+  
+  return JSON.stringify({
+    rerun: 0.1,
+    variables: { streaming_now: true },
+    response: Chat.format(Chat.load(chatFile), true),
+    behaviour: { response: 'replacelast' }
+  });
+}
