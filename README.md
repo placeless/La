@@ -1,4 +1,4 @@
-# <img src='Workflow/icon.png' width='45' align='center' alt='icon'> LLM Alfred Workflow
+# La 🌶️ - An LLM Alfred Workflow
 
 ## Setup
 
@@ -131,7 +131,7 @@ $$Magic = Wand + Gesture + Spell$$
 
 ### ChatGPT
 
-Query ChatGPT via the `chatgpt` keyword, the [Universal Action](https://www.alfredapp.com/help/features/universal-actions/), or the [Fallback Search](https://www.alfredapp.com/help/features/default-results/fallback-searches/).
+Query ChatGPT via the `ask` keyword, the [Universal Action](https://www.alfredapp.com/help/features/universal-actions/), or the [Fallback Search](https://www.alfredapp.com/help/features/default-results/fallback-searches/).
 
 ![Start ChatGPT query](Workflow/images/about/chatgptkeyword.png)
 
