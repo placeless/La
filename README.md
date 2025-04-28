@@ -2,6 +2,25 @@
 
 ## Setup
 
+Please create a configuration file, such as `~/.config/alfred/la.json`, tailored to your specific needs. This configuration file should be structured into two main sections: `providers` for your Large Language Model (LLM) providers and `tasks` for the tasks you want the LLMs to perform.
+
+Each `provider` entry should include the following:
+
+*   `endpoint`: The API endpoint URL for the LLM provider.
+*   `api_key`: Your API key for authentication.
+*   `models`: A list of the models available from that provider.
+
+Each `task` entry should potentially specify:
+
+*   `provider`: The name of the provider to use.
+*   `model`: The specific model to use from the chosen provider.
+*   `parameters`: Any specific parameters to pass to the model (e.g., temperature, top_p).
+*   `prompts`: The prompts to be used for the task. Prompts can be either:
+    *   Plain text strings.
+    *   Paths to Markdown files located in a `./prompts` directory relative to the configuration file's location.
+    *   Support for `extra` prompts, which can be used for shared prompts across multiple tasks.
+*   `tools`: (Optional) If the model supports tool use, this section allows you to configure the tools to be used within the task.
+
 ```
 {
   "providers": {
@@ -60,13 +79,13 @@
 
 ## Usage
 
-### ChatGPT
+### Chat
 
-Query ChatGPT via the `ask` keyword, the [Universal Action](https://www.alfredapp.com/help/features/universal-actions/), or the [Fallback Search](https://www.alfredapp.com/help/features/default-results/fallback-searches/).
+Query LLM via the `ask` keyword, the [Universal Action](https://www.alfredapp.com/help/features/universal-actions/), or the [Fallback Search](https://www.alfredapp.com/help/features/default-results/fallback-searches/).
 
-![Start ChatGPT query](Workflow/images/about/chatgptkeyword.png)
+![Start a chat](images/about/chatkeyword.png)
 
-![Querying ChatGPT](Workflow/images/about/chatgpttextview.png)
+![Chat text view](images/about/chattextview.png)
 
 - <kbd>↩&#xFE0E;</kbd> Ask a new question.
 - <kbd>⌘</kbd><kbd>↩&#xFE0E;</kbd> Continue chat.
@@ -76,8 +95,8 @@ Query ChatGPT via the `ask` keyword, the [Universal Action](https://www.alfredap
 
 #### Chat History
 
-View Chat History with ⌥↩&#xFE0E; in the `chatgpt` keyword. Each result shows the first question as the title and the last as the subtitle.
+View Chat History with ⌥↩&#xFE0E; in the `ask` keyword. Each result shows the first question as the title and the last as the subtitle.
 
-![Viewing chat histories](Workflow/images/about/chatgpthistory.png)
+![Viewing chat histories](images/about/chathistory.png)
 
 <kbd>↩&#xFE0E;</kbd> to archive the current chat and load the selected one. Older chats can be trashed with the `Delete` [Universal Action](https://www.alfredapp.com/help/features/universal-actions/). Select multiple chats with the [File Buffer](https://www.alfredapp.com/help/features/file-search/#file-buffer).
