@@ -3687,10 +3687,8 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<string>timeout</string>
 		</dict>
 	</array>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
-	<string>2025.04.27</string>
+	<string>2025.05.03</string>
 	<key>webaddress</key>
 	<string>https://github.com/placeless/La/</string>
 </dict>
