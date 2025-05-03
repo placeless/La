@@ -112,6 +112,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>0BDE634A-71DC-47CE-8D57-CE458C4225B3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1427F4E3-91ED-47E0-88E9-621F5365C768</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>0FA24848-5869-49C1-8F70-394C120C3897</key>
 		<array>
 			<dict>
@@ -186,6 +199,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>1177C2DD-7A14-4B11-AFA0-16D064CDD3DF</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>1427F4E3-91ED-47E0-88E9-621F5365C768</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>43068849-86B3-4C08-92A0-F5D9235234A7</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -290,6 +316,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>BA834298-7386-4B4C-9E7D-E2D8542518B0</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>378E6FAF-FA24-4364-9562-E8DF03312039</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E5CDCB47-0C7C-44DC-A03B-162EE2BCC115</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -867,6 +906,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>AE850CCC-CA18-44AA-A53E-8A811E131E19</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>E5CDCB47-0C7C-44DC-A03B-162EE2BCC115</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0BDE634A-71DC-47CE-8D57-CE458C4225B3</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -2690,6 +2742,137 @@ kill "${pid_stream}"
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:chat_keyword}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>scripts/list_tasks.js</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>La tasks</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>378E6FAF-FA24-4364-9562-E8DF03312039</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>skipuniversalaction</key>
+				<true/>
+				<key>subtext</key>
+				<string>Optionally add a line of text which will be prepended to the input</string>
+				<key>text</key>
+				<string>Add Context</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>0BDE634A-71DC-47CE-8D57-CE458C4225B3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>externaltriggerid</key>
+				<string>chat_magic</string>
+				<key>passinputasargument</key>
+				<true/>
+				<key>passvariables</key>
+				<true/>
+				<key>workflowbundleid</key>
+				<string>self</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.callexternaltrigger</string>
+			<key>uid</key>
+			<string>43068849-86B3-4C08-92A0-F5D9235234A7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>new_chat</key>
+					<string>0</string>
+					<key>task</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>E5CDCB47-0C7C-44DC-A03B-162EE2BCC115</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>message</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>1427F4E3-91ED-47E0-88E9-621F5365C768</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>## Setup
@@ -2867,6 +3050,15 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<key>ypos</key>
 			<real>255</real>
 		</dict>
+		<key>0BDE634A-71DC-47CE-8D57-CE458C4225B3</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>9</integer>
+			<key>xpos</key>
+			<real>310</real>
+			<key>ypos</key>
+			<real>2260</real>
+		</dict>
 		<key>0FA24848-5869-49C1-8F70-394C120C3897</key>
 		<dict>
 			<key>xpos</key>
@@ -2902,6 +3094,15 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>50</real>
 			<key>ypos</key>
 			<real>2050</real>
+		</dict>
+		<key>1427F4E3-91ED-47E0-88E9-621F5365C768</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<real>480</real>
+			<key>ypos</key>
+			<real>2290</real>
 		</dict>
 		<key>18EF5214-432D-49ED-9CEB-C1FED6247EA7</key>
 		<dict>
@@ -2985,6 +3186,20 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>1640</real>
 			<key>ypos</key>
 			<real>1750</real>
+		</dict>
+		<key>378E6FAF-FA24-4364-9562-E8DF03312039</key>
+		<dict>
+			<key>xpos</key>
+			<real>50</real>
+			<key>ypos</key>
+			<real>2260</real>
+		</dict>
+		<key>43068849-86B3-4C08-92A0-F5D9235234A7</key>
+		<dict>
+			<key>xpos</key>
+			<real>605</real>
+			<key>ypos</key>
+			<real>2260</real>
 		</dict>
 		<key>4541D3AF-9385-480F-B702-6F34725D5F25</key>
 		<dict>
@@ -3294,6 +3509,15 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>1510</real>
 			<key>ypos</key>
 			<real>135</real>
+		</dict>
+		<key>E5CDCB47-0C7C-44DC-A03B-162EE2BCC115</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<real>220</real>
+			<key>ypos</key>
+			<real>2290</real>
 		</dict>
 		<key>E5D42111-A4E5-4C7E-AED9-B0A379A66986</key>
 		<dict>
