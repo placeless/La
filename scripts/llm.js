@@ -84,7 +84,7 @@ const Chat = {
 
   metadata(config) {
     return {
-      intent: config.intent,
+      task: config.task,
       provider: config.provider,
       model: config.model,
     };

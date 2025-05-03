@@ -16,8 +16,8 @@ function run(argv) {
   const confPath = envVar("config");
   const config = JSON.parse(read(confPath));
 
-  const intent = envVar("intent");
-  const recipe = config.tasks[intent];
+  const task = envVar("task");
+  const recipe = config.tasks[task];
   const provider = config.providers[recipe.provider];
   recipe.endpoint = provider.endpoint;
   recipe.api_key = provider["api_key"];

@@ -392,6 +392,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>5640EE91-C4A6-4905-B3D4-9A45325A0B20</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>844ECFF1-DB1E-4FF5-ACE1-A273F2101447</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>56DBE55B-B6C0-49FD-80C3-1B4BA841F6BF</key>
 		<array>
 			<dict>
@@ -626,6 +639,29 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>4DB440D5-3814-4C79-9724-D19FDDDA4BEC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B47F37CB-887C-4CAB-ABB6-76366179C1B4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FA46ACFA-8217-4EF7-A445-52547208D79A</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>5640EE91-C4A6-4905-B3D4-9A45325A0B20</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -941,6 +977,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>FA46ACFA-8217-4EF7-A445-52547208D79A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>844ECFF1-DB1E-4FF5-ACE1-A273F2101447</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>FA725E90-6083-4024-B085-AA1FBAD00591</key>
 		<array>
 			<dict>
@@ -1002,11 +1051,11 @@
 				<key>focusedappvariablename</key>
 				<string></string>
 				<key>hotkey</key>
-				<integer>46</integer>
+				<integer>0</integer>
 				<key>hotmod</key>
-				<integer>1310720</integer>
+				<integer>0</integer>
 				<key>hotstring</key>
-				<string>M</string>
+				<string></string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -1030,12 +1079,12 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>translate</string>
 					<key>message</key>
 					<string>"{query}"</string>
 					<key>new_chat</key>
 					<string>0</string>
+					<key>task</key>
+					<string>translate</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1113,42 +1162,18 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>explain</string>
 					<key>message</key>
 					<string>{query}</string>
 					<key>new_chat</key>
 					<string>0</string>
+					<key>task</key>
+					<string>explain</string>
 				</dict>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
 			<string>E4DD183C-28A1-497C-ADD8-079E61625E36</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict>
-					<key>intent</key>
-					<string>translate</string>
-					<key>message</key>
-					<string>"{query}"</string>
-					<key>new_chat</key>
-					<string>1</string>
-				</dict>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>B4CB25FA-2148-432B-A7A2-1C8C0DD5D2E6</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1169,6 +1194,30 @@
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
 			<string>7AFA8D59-BC0C-4B96-8E9A-006D47D580E1</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>message</key>
+					<string>"{query}"</string>
+					<key>new_chat</key>
+					<string>1</string>
+					<key>task</key>
+					<string>translate</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>B4CB25FA-2148-432B-A7A2-1C8C0DD5D2E6</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1202,12 +1251,12 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>translate</string>
 					<key>message</key>
 					<string>"{query}"</string>
 					<key>new_chat</key>
 					<string>0</string>
+					<key>task</key>
+					<string>translate</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1302,12 +1351,12 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>explain</string>
 					<key>message</key>
 					<string>{query}</string>
 					<key>new_chat</key>
 					<string>1</string>
+					<key>task</key>
+					<string>explain</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1326,12 +1375,12 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>translate</string>
 					<key>message</key>
 					<string>"{query}"</string>
 					<key>new_chat</key>
 					<string>1</string>
+					<key>task</key>
+					<string>translate</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1399,11 +1448,11 @@
 				<key>focusedappvariablename</key>
 				<string></string>
 				<key>hotkey</key>
-				<integer>17</integer>
+				<integer>0</integer>
 				<key>hotmod</key>
-				<integer>1310720</integer>
+				<integer>0</integer>
 				<key>hotstring</key>
-				<string>T</string>
+				<string></string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -1427,12 +1476,102 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>ask</string>
+					<key>message</key>
+					<string>{query}</string>
+					<key>new_chat</key>
+					<string>0</string>
+					<key>task</key>
+					<string>chat</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>FA46ACFA-8217-4EF7-A445-52547208D79A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>externaltriggerid</key>
+				<string>chat_magic</string>
+				<key>passinputasargument</key>
+				<true/>
+				<key>passvariables</key>
+				<true/>
+				<key>workflowbundleid</key>
+				<string>self</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.callexternaltrigger</string>
+			<key>uid</key>
+			<string>844ECFF1-DB1E-4FF5-ACE1-A273F2101447</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>chat</string>
+				<key>skipuniversalaction</key>
+				<true/>
+				<key>subtext</key>
+				<string>↩ New chat · ⌘↩ Continue chat · ⌥↩ Chat history</string>
+				<key>text</key>
+				<string>Chat with LLM</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>B47F37CB-887C-4CAB-ABB6-76366179C1B4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>message</key>
+					<string>{query}</string>
+					<key>new_chat</key>
+					<string>1</string>
+					<key>task</key>
+					<string>chat</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>5640EE91-C4A6-4905-B3D4-9A45325A0B20</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
 					<key>new_chat</key>
 					<string>0</string>
 					<key>selection</key>
 					<string>{query}</string>
+					<key>task</key>
+					<string>ask</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1567,12 +1706,12 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>ask</string>
 					<key>new_chat</key>
 					<string>1</string>
 					<key>selection</key>
 					<string>{query}</string>
+					<key>task</key>
+					<string>ask</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1600,6 +1739,19 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>text</key>
+				<string>Ask LLM '{query}'</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.fallback</string>
+			<key>uid</key>
+			<string>DA9FB2AC-0A0A-463D-B07A-B25CD699C24C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>externaltriggerid</key>
 				<string>chat_magic</string>
 				<key>passinputasargument</key>
@@ -1619,31 +1771,18 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>text</key>
-				<string>Ask LLM '{query}'</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.fallback</string>
-			<key>uid</key>
-			<string>DA9FB2AC-0A0A-463D-B07A-B25CD699C24C</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argument</key>
 				<string></string>
 				<key>passthroughargument</key>
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>ask</string>
 					<key>message</key>
 					<string>{query}</string>
 					<key>new_chat</key>
 					<string>1</string>
+					<key>task</key>
+					<string>ask</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1693,12 +1832,12 @@
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>intent</key>
-					<string>ask</string>
 					<key>message</key>
 					<string>{query}</string>
 					<key>new_chat</key>
 					<string>0</string>
+					<key>task</key>
+					<string>ask</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1768,12 +1907,12 @@
 				<dict>
 					<key>chatgpt_history_save</key>
 					<string>1</string>
-					<key>intent</key>
-					<string>ask</string>
 					<key>new_chat</key>
 					<string>1</string>
 					<key>replace_with_chat</key>
 					<string>{query}</string>
+					<key>task</key>
+					<string>ask</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -1929,12 +2068,12 @@ kill "${pid_stream}"
 				<key>availableviaurlhandler</key>
 				<false/>
 				<key>triggerid</key>
-				<string>chat_pipeline</string>
+				<string>new_chat</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
-			<string>261A06FF-9999-4342-B2ED-2DF2C9505AA3</string>
+			<string>A6AD2F54-5A90-4F2A-8585-27AE685FD251</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1944,12 +2083,12 @@ kill "${pid_stream}"
 				<key>availableviaurlhandler</key>
 				<false/>
 				<key>triggerid</key>
-				<string>new_chat</string>
+				<string>chat_pipeline</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
-			<string>A6AD2F54-5A90-4F2A-8585-27AE685FD251</string>
+			<string>261A06FF-9999-4342-B2ED-2DF2C9505AA3</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -2127,44 +2266,6 @@ kill "${pid_stream}"
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>tasksettings</key>
-				<dict/>
-				<key>taskuid</key>
-				<string>com.alfredapp.automation.core/files-and-folders/directory.new</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.automation.task</string>
-			<key>uid</key>
-			<string>A9ABC5CB-D8E3-4E0D-9006-7B7F70A37D50</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>68</integer>
-				<key>script</key>
-				<string></string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>scripts/copy_last.js</string>
-				<key>type</key>
-				<integer>8</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>A4782A1E-2A93-401B-9CB7-1D8770AD510E</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>behaviour</key>
 				<integer>2</integer>
 				<key>fontmode</key>
@@ -2217,6 +2318,44 @@ kill "${pid_stream}"
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>scripts/copy_last.js</string>
+				<key>type</key>
+				<integer>8</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A4782A1E-2A93-401B-9CB7-1D8770AD510E</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>tasksettings</key>
+				<dict/>
+				<key>taskuid</key>
+				<string>com.alfredapp.automation.core/files-and-folders/directory.new</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.automation.task</string>
+			<key>uid</key>
+			<string>A9ABC5CB-D8E3-4E0D-9006-7B7F70A37D50</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>conditions</key>
 				<array>
 					<dict>
@@ -2243,6 +2382,42 @@ kill "${pid_stream}"
 			<string>alfred.workflow.utility.conditional</string>
 			<key>uid</key>
 			<string>F51DA51D-D1F1-4C2B-9FF9-D3B0B761C227</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>{var:init_question}
+{var:message}</string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>B34F5D4B-43D6-47E7-AC9E-0258BF80F186</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>{const:alfred_workflow_data}
+{const:alfred_workflow_cache}</string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>BEF31BF9-C0C4-47F4-9ECA-3D50C2A84EE7</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -2278,42 +2453,6 @@ kill "${pid_stream}"
 			<string>alfred.workflow.utility.split</string>
 			<key>uid</key>
 			<string>E5D42111-A4E5-4C7E-AED9-B0A379A66986</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string>{const:alfred_workflow_data}
-{const:alfred_workflow_cache}</string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>BEF31BF9-C0C4-47F4-9ECA-3D50C2A84EE7</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string>{var:init_question}
-{var:message}</string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>B34F5D4B-43D6-47E7-AC9E-0258BF80F186</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -2723,8 +2862,6 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
-			<key>note</key>
-			<string>Intent</string>
 			<key>xpos</key>
 			<real>1595</real>
 			<key>ypos</key>
@@ -2883,6 +3020,15 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<key>ypos</key>
 			<real>1595</real>
 		</dict>
+		<key>5640EE91-C4A6-4905-B3D4-9A45325A0B20</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<real>1550</real>
+			<key>ypos</key>
+			<real>525</real>
+		</dict>
 		<key>56DBE55B-B6C0-49FD-80C3-1B4BA841F6BF</key>
 		<dict>
 			<key>colorindex</key>
@@ -2944,6 +3090,13 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>1980</real>
 			<key>ypos</key>
 			<real>1595</real>
+		</dict>
+		<key>844ECFF1-DB1E-4FF5-ACE1-A273F2101447</key>
+		<dict>
+			<key>xpos</key>
+			<real>1765</real>
+			<key>ypos</key>
+			<real>415</real>
 		</dict>
 		<key>84A47CA0-9D2D-4F06-A7AD-71C5DEF87663</key>
 		<dict>
@@ -3034,6 +3187,15 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>1280</real>
 			<key>ypos</key>
 			<real>1625</real>
+		</dict>
+		<key>B47F37CB-887C-4CAB-ABB6-76366179C1B4</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>xpos</key>
+			<real>1205</real>
+			<key>ypos</key>
+			<real>415</real>
 		</dict>
 		<key>B4CB25FA-2148-432B-A7A2-1C8C0DD5D2E6</key>
 		<dict>
@@ -3128,8 +3290,6 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
-			<key>note</key>
-			<string>Intent</string>
 			<key>xpos</key>
 			<real>1510</real>
 			<key>ypos</key>
@@ -3180,6 +3340,15 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>775</real>
 			<key>ypos</key>
 			<real>1395</real>
+		</dict>
+		<key>FA46ACFA-8217-4EF7-A445-52547208D79A</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<real>1550</real>
+			<key>ypos</key>
+			<real>380</real>
 		</dict>
 		<key>FA725E90-6083-4024-B085-AA1FBAD00591</key>
 		<dict>
@@ -3294,6 +3463,8 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<string>timeout</string>
 		</dict>
 	</array>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
 	<string>2025.04.27</string>
 	<key>webaddress</key>
