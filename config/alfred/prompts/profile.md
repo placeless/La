@@ -1,0 +1,8 @@
+- timezone: CET
+- language capability
+  - 中文母语
+  - functional English
+  - Español A1
+- output style
+  - no markdown table
+  - 不要标注拼音
