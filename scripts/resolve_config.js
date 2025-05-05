@@ -21,7 +21,24 @@ function run(argv) {
   const provider = config.providers[recipe.provider];
   recipe.endpoint = provider.endpoint;
   recipe.api_key = provider["api_key"];
+  
+  // Always resolve the model ID first
   recipe.model = provider.models[recipe.model];
+  
+  // Handle Cloudflare AI Gateway mode
+  if (recipe.cf_aig_mode) {
+    // For Cloudflare AI Gateway, we need to keep the original provider info
+    recipe.provider = recipe.provider;
+    // Get Cloudflare provider's endpoint and API key
+    const cfProvider = config.providers.cloudflare;
+    if (cfProvider) {
+      recipe.cf_endpoint = cfProvider.endpoint;
+      recipe.cf_api_key = cfProvider.api_key;
+    }
+  }
+  
+  // Ensure api_style is passed through if not set
+  recipe.api_style = recipe.api_style || 'openai';
 
   if (recipe.prompts.endsWith(".md")) {
     recipe.prompts = read(

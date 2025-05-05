@@ -130,14 +130,51 @@ const AI = {
   },
 
   payload(config, messages) {
-    if (!config.api_key || !config.endpoint) return null;
+    if (!config.endpoint) return null;
 
-    if (config.provider === 'google') {
+    // Handle Cloudflare AI Gateway mode
+    if (config.cf_aig_mode) {
+      // Get the original payload based on api_style
+      const originalPayload = this.getOriginalPayload(config, messages);
+      if (!originalPayload) return null;
+
+      // Construct the Cloudflare AI Gateway payload
+      const cfPayload = [{
+        provider: config.provider,
+        endpoint: this.getEndpointPath(config),
+        headers: this.getHeaders(config),
+        query: originalPayload
+      }];
+
+      return cfPayload;
+    }
+
+    // Regular payload handling
+    return this.getOriginalPayload(config, messages);
+  },
+
+  getOriginalPayload(config, messages) {
+    if (config.api_style === 'google') {
       // Gemini has a different format for messages
-      const contents = messages.map(msg => ({
+      const contents = [];
+      
+      // Add system prompt if it exists
+      if (config.prompts) {
+        contents.push({
+          role: 'user',
+          parts: [{ text: config.prompts }]
+        });
+        contents.push({
+          role: 'model',
+          parts: [{ text: 'I understand and will follow these instructions.' }]
+        });
+      }
+
+      // Add conversation messages
+      contents.push(...messages.map(msg => ({
         role: msg.role === 'user' ? 'user' : 'model',
         parts: [{ text: msg.content }]
-      }));
+      })));
 
       // Convert OpenAI style parameters to Gemini format and wrap in generationConfig
       const geminiParams = this.mapGeminiParameters(config.parameters || {});
@@ -166,6 +203,32 @@ const AI = {
     };
   },
 
+  getEndpointPath(config) {
+    if (config.api_style === 'google') {
+      return `v1beta/models/${config.model}:streamGenerateContent?alt=sse`;
+    }
+    const url = $.NSURL.URLWithString(config.endpoint);
+    const path = ObjC.unwrap(url.path);
+    return path;
+    // return 'v1/chat/completions';
+  },
+
+  getHeaders(config) {
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+
+    if (config.api_style === 'google') {
+      headers['x-goog-api-key'] = config.api_key;
+    } else if (config.provider === 'azure') {
+      headers['api-key'] = config.api_key;
+    } else {
+      headers['Authorization'] = `Bearer ${config.api_key}`;
+    }
+
+    return headers;
+  },
+
   command(config, messages) {
     const payload = this.payload(config, messages);
     if (!payload) return null;
@@ -173,21 +236,47 @@ const AI = {
     // Get timeout in seconds for curl's --speed-time parameter
     const timeoutSeconds = Env.getTimeoutSeconds();
 
-    let endpoint = config.endpoint;
+    let endpoint;
     let headers = [
       "--header", "Content-Type: application/json",
       "--header", "Accept: text/event-stream",
     ];
 
-    if (config.provider === 'google') {
-      // For Gemini, append API key as query parameter and add streaming parameter
-      endpoint = `${endpoint}/${config.model}:streamGenerateContent?key=${config.api_key}&alt=sse`;
-    } else if (config.provider === 'azure') {
-      headers.push("--header", `api-key: ${config.api_key}`);
+    // Handle Cloudflare AI Gateway mode
+    if (config.cf_aig_mode) {
+      // Use Cloudflare AI Gateway endpoint
+      endpoint = config.cf_endpoint;
+
+      // Get the Cloudflare provider's API key
+      const cfApiKey = config.cf_api_key;
+
+      // Add Cloudflare AI Gateway authorization header if API key is present
+      if (cfApiKey) {
+        headers.push("--header", `cf-aig-authorization: Bearer ${cfApiKey}`);
+      }
     } else {
-      // Default OpenAI
-      headers.push("--header", `Authorization: Bearer ${config.api_key}`);
+      // Regular endpoint handling
+      endpoint = config.endpoint;
+      if (config.api_style === 'google') {
+        const url = $.NSURL.URLWithString(endpoint);
+        const scheme = ObjC.unwrap(url.scheme);
+        const host = ObjC.unwrap(url.host);
+        const baseURL = `${scheme}://${host}`;
+        endpoint = `${baseURL}/v1beta/models/${config.model}:streamGenerateContent?alt=sse`;
+        headers.push("--header", `x-goog-api-key: ${config.api_key}`);
+      } else if (config.provider === 'azure') {
+        headers.push("--header", `api-key: ${config.api_key}`);
+      } else {
+        headers.push("--header", `Authorization: Bearer ${config.api_key}`);
+      }
     }
+
+    // For debugging
+    console.log(`\n-----> Command: ${JSON.stringify({
+      endpoint,
+      headers,
+      payload
+    }, null, 2)}\n`);
 
     return [
       endpoint,
@@ -244,7 +333,7 @@ const Stream = {
 
     try {
       // For Gemini, the response comes as SSE format with data: prefix
-      if (this.config.provider === 'google') {
+      if (this.config.api_style === 'google') {
         data
           .split('\n')
           .filter(Boolean)
@@ -255,7 +344,7 @@ const Stream = {
               const chunk = JSON.parse(line);
               if (chunk.candidates?.[0]) {
                 const candidate = chunk.candidates[0];
-                
+
                 // Store grounding metadata if present
                 if (candidate.groundingMetadata) {
                   groundingMetadata = candidate.groundingMetadata;
@@ -263,7 +352,7 @@ const Stream = {
 
                 // Extract text from the parts array
                 text += candidate.content?.parts?.[0]?.text || '';
-                
+
                 // Check for finish reason
                 if (candidate.finishReason) {
                   finished = candidate.finishReason;
@@ -329,7 +418,7 @@ const Stream = {
       return true;
     }
 
-    if (this.config.provider === 'google') {
+    if (this.config.api_style === 'google') {
       try {
         // For SSE format, look for the first data: line
         const firstChunk = data
@@ -385,11 +474,12 @@ function run(argv) {
   config.max_context ||= 4;
   const isStreaming = Env.get("streaming_now") === "1";
 
-  const basePath = Env.get("alfred_workflow_data");
+  const dataPath = Env.get("alfred_workflow_data");
+  const cachePath = Env.get("alfred_workflow_cache");
   const paths = {
-    chat: `${basePath}/chat.json`,
-    stream: `${basePath}/stream`,
-    pid: `${basePath}/pid`,
+    chat: `${dataPath}/chat.json`,
+    stream: `${cachePath}/stream.txt`,
+    pid: `${cachePath}/pid.txt`,
   };
 
   const chat = Chat.init(paths.chat);
@@ -432,7 +522,6 @@ function run(argv) {
 
   // Restore interrupted session (esc)
   if (Files.exists(paths.stream)) {
-    console.log(`-----------> 2`)
     return Env.str({
       rerun: 0.1,
       variables: { streaming_now: true },

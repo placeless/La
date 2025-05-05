@@ -901,6 +901,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>E0280E3F-4031-420A-8D34-27AB48B44B04</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>02627B69-31FA-4441-A186-B2095B6F40B9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>E4DD183C-28A1-497C-ADD8-079E61625E36</key>
 		<array>
 			<dict>
@@ -1977,6 +1990,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>lacache</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Clear Cache</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>E0280E3F-4031-420A-8D34-27AB48B44B04</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>externaltriggerid</key>
 				<string>new_chat</string>
 				<key>passinputasargument</key>
@@ -2884,6 +2918,8 @@ Each `provider` entry should include the following:
 *   `endpoint`: The API endpoint URL for the LLM provider.
 *   `api_key`: Your API key for authentication.
 *   `models`: A list of the models available from that provider.
+*   `api_style`: (Optional) The API style to use. Can be either "google" or "openai". If not specified, it will be determined by the provider name.
+*   `cf_aig_mode`: (Optional) Set to true to route requests through Cloudflare AI Gateway. When enabled, the endpoint should be your Cloudflare AI Gateway URL.
 
 Each `task` entry should potentially specify:
 
@@ -2899,18 +2935,12 @@ Each `task` entry should potentially specify:
 ```
 {
   "providers": {
-    "google": {
-      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
-      "api_key": "",
-      "models": {
-        "gemini-2.5-flash": "gemini-2.5-flash-preview-04-17",
-        "gemini-2.0-flash": "gemini-2.0-flash"
-      }
-    },
-    "google_openai": {
+    "google-ai-studio": {
       "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
       "api_key": "",
       "models": {
+        "gemini-2.5-flash": "gemini-2.5-flash-preview-04-17",
+        "gemini-2.0-flash": "gemini-2.0-flash",
         "gemini-2.0-flash-lite": "gemini-2.0-flash-lite-preview-02-05",
         "learnlm-1.5-pro": "learnlm-1.5-pro-experimental"
       }
@@ -2921,11 +2951,17 @@ Each `task` entry should potentially specify:
       "models": {
         "qwen-qwq-32b": "qwen-qwq-32b"
       }
+    },
+    "cloudflare": {
+      "endpoint": "https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID/GATEWAY_ID",
+      "api_key": "",
     }
   },
   "tasks": {
     "explain": {
       "provider": "google_openai",
+      "api_style": "openai",
+      "cf_aig_mode": true,
       "model": "gemini-2.0-flash",
       "parameters": {
         "temperature": 0.3,
@@ -2935,6 +2971,7 @@ Each `task` entry should potentially specify:
     },
     "ask": {
       "provider": "google",
+      "api_style": "google",
       "model": "gemini-2.5-flash",
       "parameters": {
         "temperature": 0.1
@@ -3501,6 +3538,13 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<key>ypos</key>
 			<real>115</real>
 		</dict>
+		<key>E0280E3F-4031-420A-8D34-27AB48B44B04</key>
+		<dict>
+			<key>xpos</key>
+			<real>1475</real>
+			<key>ypos</key>
+			<real>1300</real>
+		</dict>
 		<key>E4DD183C-28A1-497C-ADD8-079E61625E36</key>
 		<dict>
 			<key>colorindex</key>
@@ -3687,6 +3731,8 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<string>timeout</string>
 		</dict>
 	</array>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
 	<string>2025.05.03</string>
 	<key>webaddress</key>

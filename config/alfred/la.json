@@ -1,17 +1,11 @@
 {
   "providers": {
-    "google": {
-      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "google-ai-studio": {
+      "endpoint": "https://generativelanguage.googleapis.com",
       "api_key": "",
       "models": {
         "gemini-2.5-flash": "gemini-2.5-flash-preview-04-17",
-        "gemini-2.0-flash": "gemini-2.0-flash"
-      }
-    },
-    "google_openai": {
-      "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-      "api_key": "",
-      "models": {
+        "gemini-2.0-flash": "gemini-2.0-flash",
         "gemini-2.0-flash-lite": "gemini-2.0-flash-lite-preview-02-05",
         "learnlm-1.5-pro": "learnlm-1.5-pro-experimental"
       }
@@ -31,12 +25,17 @@
       "models": {
         "qwen-qwq-32b": "qwen-qwq-32b"
       }
+    },
+    "cloudflare": {
+      "endpoint": "https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID/GATEWAY_ID",
+      "api_key": ""
     }
   },
   "tasks": {
     "explain": {
       "description": "Explain language elements in the input.",
-      "provider": "google_openai",
+      "provider": "google-ai-studio",
+      "api_style": "openai",
       "model": "gemini-2.0-flash",
       "parameters": {
         "temperature": 0.3
@@ -45,8 +44,8 @@
     },
     "translate": {
       "description": "Translate input to target (Opt key) language, default Chinese.",
-      "provider": "google_openai",
-      "model": "gemini-2.0-flash-lite",
+      "provider": "groq",
+      "model": "qwen-qwq-32b",
       "parameters": {
         "temperature": 0
       },
@@ -54,7 +53,9 @@
     },
     "ask": {
       "description": "Ask anything.",
-      "provider": "google",
+      "provider": "google-ai-studio",
+      "api_style": "google",
+      "cf_aig_mode": true,
       "model": "gemini-2.5-flash",
       "parameters": {
         "temperature": 0.1

@@ -71,9 +71,21 @@ function checkConfigHealth(configPath) {
             continue;
         }
 
-        // Check model configuration
+        // Check api_style if present
+        if (task.api_style && !['google', 'openai'].includes(task.api_style)) {
+            results.status = "error";
+            results.errors.push(`Task '${taskName}' has invalid api_style: '${task.api_style}'. Must be either 'google' or 'openai'`);
+        }
+
+        // Check cf_aig_mode if present
+        if (task.cf_aig_mode !== undefined && typeof task.cf_aig_mode !== 'boolean') {
+            results.status = "error";
+            results.errors.push(`Task '${taskName}' has invalid cf_aig_mode: must be a boolean value`);
+        }
+
+        // Check model configuration (skip for cloudflare provider)
         const provider = config.providers[task.provider];
-        if (task.model && !provider.models?.[task.model]) {
+        if (provider.provider !== 'cloudflare' && task.model && !provider.models?.[task.model]) {
             results.status = "error";
             results.errors.push(`Task '${taskName}' references non-existent model '${task.model}' in provider '${task.provider}'`);
         }
@@ -101,14 +113,14 @@ function checkConfigHealth(configPath) {
             results.errors.push(`Provider '${providerName}' is missing endpoint configuration`);
         }
 
-        // Check API key
-        if (!provider.api_key) {
+        // Check API key (optional for cloudflare provider)
+        if (!provider.api_key && providerName !== 'cloudflare') {
             results.status = "warning";
             results.warnings.push(`Provider '${providerName}' is missing API key configuration`);
         }
 
-        // Check model configurations
-        if (!provider.models || Object.keys(provider.models).length === 0) {
+        // Check model configurations (not required for cloudflare provider)
+        if (providerName !== 'cloudflare' && (!provider.models || Object.keys(provider.models).length === 0)) {
             results.status = "warning";
             results.warnings.push(`Provider '${providerName}' has no models configured`);
         }
