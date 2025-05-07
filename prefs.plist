@@ -4,5 +4,7 @@
 <dict>
 	<key>config</key>
 	<string>~/.config/alfred/la.json</string>
+	<key>timeout</key>
+	<integer>20</integer>
 </dict>
 </plist>

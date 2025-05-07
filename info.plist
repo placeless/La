@@ -431,6 +431,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>5240DB52-BB58-4F25-863A-BCB498B75EDA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8B1B28A9-D990-4A99-98AF-4CFDD8984731</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>5640EE91-C4A6-4905-B3D4-9A45325A0B20</key>
 		<array>
 			<dict>
@@ -562,6 +575,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>49E21A5E-5BA5-423E-B688-BDF873483732</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>8B1B28A9-D990-4A99-98AF-4CFDD8984731</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6AE966C0-CABD-4F8D-81FF-F5ED04230E65</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -895,19 +921,6 @@
 				<string>D1A4E162-F340-4EE3-81B1-3665E3459080</string>
 				<key>modifiers</key>
 				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>E0280E3F-4031-420A-8D34-27AB48B44B04</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>02627B69-31FA-4441-A186-B2095B6F40B9</string>
-				<key>modifiers</key>
-				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
@@ -1990,6 +2003,55 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>pid.txt and stream.txt removed</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>6AE966C0-CABD-4F8D-81FF-F5ED04230E65</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>readonly stream_file="${alfred_workflow_cache}/stream.txt"
+readonly pid_stream_file="${alfred_workflow_cache}/pid.txt"
+readonly pid_stream="$(&lt; "${pid_stream_file}")"
+
+kill "${pid_stream}"
+/bin/rm "${stream_file}" "${pid_stream_file}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>8B1B28A9-D990-4A99-98AF-4CFDD8984731</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
@@ -2004,7 +2066,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>E0280E3F-4031-420A-8D34-27AB48B44B04</string>
+			<string>5240DB52-BB58-4F25-863A-BCB498B75EDA</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -3272,6 +3334,13 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<key>ypos</key>
 			<real>1595</real>
 		</dict>
+		<key>5240DB52-BB58-4F25-863A-BCB498B75EDA</key>
+		<dict>
+			<key>xpos</key>
+			<real>1405</real>
+			<key>ypos</key>
+			<real>1170</real>
+		</dict>
 		<key>5640EE91-C4A6-4905-B3D4-9A45325A0B20</key>
 		<dict>
 			<key>colorindex</key>
@@ -3305,6 +3374,13 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>375</real>
 			<key>ypos</key>
 			<real>545</real>
+		</dict>
+		<key>6AE966C0-CABD-4F8D-81FF-F5ED04230E65</key>
+		<dict>
+			<key>xpos</key>
+			<real>1830</real>
+			<key>ypos</key>
+			<real>1170</real>
 		</dict>
 		<key>6BB8D345-E3AA-4F77-9980-E17D9E155BFC</key>
 		<dict>
@@ -3363,6 +3439,15 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<real>535</real>
 			<key>ypos</key>
 			<real>1050</real>
+		</dict>
+		<key>8B1B28A9-D990-4A99-98AF-4CFDD8984731</key>
+		<dict>
+			<key>note</key>
+			<string>Stop and cleanup stream process</string>
+			<key>xpos</key>
+			<real>1640</real>
+			<key>ypos</key>
+			<real>1170</real>
 		</dict>
 		<key>93C97340-619A-4F67-AC74-5CC27EFAC17F</key>
 		<dict>
@@ -3538,13 +3623,6 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<key>ypos</key>
 			<real>115</real>
 		</dict>
-		<key>E0280E3F-4031-420A-8D34-27AB48B44B04</key>
-		<dict>
-			<key>xpos</key>
-			<real>1475</real>
-			<key>ypos</key>
-			<real>1300</real>
-		</dict>
 		<key>E4DD183C-28A1-497C-ADD8-079E61625E36</key>
 		<dict>
 			<key>colorindex</key>
@@ -3713,7 +3791,7 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 				<key>markercount</key>
 				<integer>5</integer>
 				<key>maxvalue</key>
-				<integer>10</integer>
+				<integer>30</integer>
 				<key>minvalue</key>
 				<integer>1</integer>
 				<key>onlystoponmarkers</key>
@@ -3731,8 +3809,6 @@ View Chat History with ⌥↩&amp;#xFE0E; in the `ask` keyword. Each result show
 			<string>timeout</string>
 		</dict>
 	</array>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
 	<string>2025.05.03</string>
 	<key>webaddress</key>
