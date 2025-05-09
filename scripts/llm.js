@@ -8,12 +8,16 @@ const Env = {
   str(data) {
     return JSON.stringify(data);
   },
-  getTimeoutSeconds() {
+  getTimeoutSeconds() { // This is for inter-chunk stall detection
     const timeout = this.get("timeout");
     return timeout ? parseInt(timeout) : 5; // Default to 5 seconds
   },
   getTimeoutMs() {
     return this.getTimeoutSeconds() * 1000; // Convert seconds to milliseconds
+  },
+  getCurlMaxTimeSeconds() { // Total time for the curl request
+    const maxTime = this.get("CURL_MAX_TIME");
+    return maxTime ? parseInt(maxTime) : 300; // Default to 300 seconds (5 minutes)
   },
 };
 
@@ -488,14 +492,14 @@ const AIEndpointHandler = {
     const payload = AIPayloadBuilder.buildPayload(config, messages);
     if (!payload) return null;
 
-    const timeoutSeconds = Env.getTimeoutSeconds();
+    const curlMaxTime = Env.getCurlMaxTimeSeconds();
     const headers = this.getCommandHeaders(config);
     const endpoint = this.getCommandEndpoint(config);
 
     return [
       endpoint,
-      "--speed-limit", "0",
-      "--speed-time", timeoutSeconds.toString(),
+      "--connect-timeout", "30", // 30 seconds to connect
+      "--max-time", curlMaxTime.toString(), // Total time for the operation
       "--silent",
       "--no-buffer",
       "--show-error",
